@@ -12,3 +12,7 @@ let flipBits =
   String.map (function | '0' -> '1' | '1' -> '0' | _ -> failwith "non binary char")
 
 let binToDec str = int_of_string (String.concat "" ["0B"; str])
+
+let sameBinAt index pattern line = 
+  assert((String.length pattern) = (String.length line));
+  (String.get pattern index) = (String.get line index)
