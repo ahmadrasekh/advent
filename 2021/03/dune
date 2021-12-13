@@ -1,0 +1,5 @@
+(executable
+ (name main)
+ (libraries str core utils)
+ (modes byte exe)
+ (modules main))
