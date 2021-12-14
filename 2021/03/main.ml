@@ -1,31 +1,55 @@
 open Utils
 
-(* gamma rate & epsilon rate  *)
-
 let parse_line str =  Str.split (Str.regexp "") str
 
-let input = Util.readFile "./input" (fun str -> List.map int_of_string (parse_line str) )
-let input_ = Util.readFile "./input" (fun x -> x )
+let calcFrequency f input = 
+  let tmp = input |>
+            List.map (fun x -> x |> parse_line |> List.map(int_of_string)) in
+  let max = tmp |> 
+            List.length |> 
+            Float.of_int |> 
+            (fun x -> x /. 2.) |> 
+            Float.ceil |> 
+            Float.to_int in
+  let freq = tmp |> 
+             Util.sum |> 
+             List.map (fun x -> if f x max then "1" else "0") |>
+             String.concat ""  in
+  freq
 
-let lambda xs = 
-  let max = (List.length xs)/2 in
-  let sums = Util.sum xs in
-  String.concat "" (List.map (fun x -> if x>=max then "1" else "0") sums)
+let rec aux f index input = match input with
+  | []
+  | _::[] -> input
+  | _ -> let freq = calcFrequency f input in
+    if index < (String.length freq) then 
+      aux f (index+1) (List.filter (fun bin -> Util.sameBinAt index freq bin) input) 
+    else input 
 
-let lambda_ xs = 
-  let oxygenPattern = lambda input in
-  let co2Pattern = Util.flipBits oxygenPattern in
-  let rec aux pattern input index = match input with
-    | []
-    | _::[] -> input
-    | _ -> if index < (String.length pattern) then aux pattern (List.filter (fun bin -> Util.sameBinAt index pattern bin) input) (index+1) else input in
-  (aux oxygenPattern xs 0, aux co2Pattern xs 0)
+let lambda_01 input =
+  let tmp = input |>
+            List.map (fun x -> x |> parse_line |> List.map(int_of_string)) in
+  let max = input |> 
+            List.map (fun x -> x |> parse_line |> List.map(int_of_string))|> 
+            List.length |>
+            (fun x -> x / 2) in
+  let sums = tmp |> Util.sum in
+  let gamma = String.concat "" (List.map (fun x -> if x>=max then "1" else "0") sums) in
+  let epsilon = Util.flipBits gamma in
+  (Util.binToDec gamma ) * (Util.binToDec epsilon)
 
 
-(* let result = lambda input
-   let result' = Util.flipBits result
-   let () = Printf.printf "part 1: %d %d\n" (Util.binToDec result) (Util.binToDec result') *)
+let lambda_02 input = 
+  let x = input |> aux (>=) 0 |> List.hd |> Util.binToDec in
+  let y = input |> aux (<) 0 |> List.hd |> Util.binToDec in
+  x*y
 
-let (result) = lambda input
-let (a, b) = lambda_ input_ ;;
-let () = Printf.printf "part 1: %s %s\n" ((List.hd a)) ((List.hd b))
+
+let () =  "./input" |>
+          Util.readFile |>
+          (*  *)
+          lambda_01 |>
+          (*  *)
+          (* lambda_02 |> *)
+          (*  *)
+          string_of_int |>
+          print_endline

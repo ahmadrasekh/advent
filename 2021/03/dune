@@ -1,5 +1,5 @@
 (executable
  (name main)
- (libraries str core utils)
+ (libraries utils)
  (modes byte exe)
  (modules main))
