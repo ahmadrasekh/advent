@@ -37,7 +37,6 @@ let lambda_01 input =
   let epsilon = Util.flipBits gamma in
   (Util.binToDec gamma ) * (Util.binToDec epsilon)
 
-
 let lambda_02 input = 
   let x = input |> aux (>=) 0 |> List.hd |> Util.binToDec in
   let y = input |> aux (<) 0 |> List.hd |> Util.binToDec in

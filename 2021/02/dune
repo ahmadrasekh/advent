@@ -1,5 +1,6 @@
 (executable
  (name main)
- (libraries core utils)
+ (modules main)
  (modes byte exe)
- (modules main))
+ (libraries utils)
+ (preprocess (pps ppx_sexp_conv)))
