@@ -1,9 +1,10 @@
 open Utils.Util
 open Sexplib.Std
 open Utils.LinearAlgebra
+
 type elem = int option [@@deriving sexp_of]
-type t = int array array [@@deriving sexp_of]
 type adjs = int list [@@deriving sexp_of]
+type t = int array array [@@deriving sexp_of]
 
 let parse_line str = str |> Str.split (Str.regexp "") |>  List.map int_of_string |> Array.of_list
 
@@ -20,7 +21,6 @@ let getAdjs (i,j) m =
 let isLowPoint (i,j) m  = 
   let adjs = getAdjs (i,j) m in
   List.fold_left (fun acc x -> ((List.hd adjs) < x) &&  acc ) true (List.tl adjs)
-
 
 let getLowPointCoords m =
   Array.mapi ( fun j row ->
@@ -60,38 +60,7 @@ let part_02 m =
   (fun (x::y::z::_) -> [List.length x; List.length y * List.length z] )|>
   List.fold_left ( * ) 1 
 
-
-
 let () = parse_input () |>
          part_02 |>
          string_of_int |>
          print_endline
-
-
-(* find low points§
-   for each low pont find boundry fill
-   sort lsit list of boundary fills by size
-   select 3 top ones
-   multiply sizes *)
-(* 
-sexp_of_adjs |>
-Core.Sexp.to_string |> 
-*)
-
-(* isLowPoint (0,0) |> *)
-(* sexp_of_adjs |> *)
-(* string_of_bool |>  *)
-(* Core.Sexp.to_string |> *)
-(* string_of_int |> *)
-(* print_endline *)
-
-
-
-let raw_input =
-  ["2199943210";
-   "3987894921";
-   "9856789892";
-   "8767896789";
-   "9899965678"] |> 
-  List.map parse_line |>
-  Array.of_list
