@@ -8,7 +8,7 @@ type t = string list [@@deriving sexp_of]
 let parse_line = Str.split (Str.regexp "")
 
 let parse_input () = "./input" |>
-                     readFile
+                     read_file
 
 let append stack char =
   match char, stack with

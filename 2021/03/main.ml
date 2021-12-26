@@ -22,7 +22,7 @@ let rec aux f index input = match input with
   | _::[] -> input
   | _ -> let freq = calcFrequency f input in
     if index < (String.length freq) then 
-      aux f (index+1) (List.filter (fun bin -> Util.sameBinAt index freq bin) input) 
+      aux f (index+1) (List.filter (fun bin -> Util.same_bin_at index freq bin) input) 
     else input 
 
 let lambda_01 input =
@@ -34,17 +34,17 @@ let lambda_01 input =
             (fun x -> x / 2) in
   let sums = tmp |> Util.sum in
   let gamma = String.concat "" (List.map (fun x -> if x>=max then "1" else "0") sums) in
-  let epsilon = Util.flipBits gamma in
-  (Util.binToDec gamma ) * (Util.binToDec epsilon)
+  let epsilon = Util.flip_bits gamma in
+  (Util.bin_to_dec gamma ) * (Util.bin_to_dec epsilon)
 
 let lambda_02 input = 
-  let x = input |> aux (>=) 0 |> List.hd |> Util.binToDec in
-  let y = input |> aux (<) 0 |> List.hd |> Util.binToDec in
+  let x = input |> aux (>=) 0 |> List.hd |> Util.bin_to_dec in
+  let y = input |> aux (<) 0 |> List.hd |> Util.bin_to_dec in
   x*y
 
 
 let () =  "./input" |>
-          Util.readFile |>
+          Util.read_file |>
           (*  *)
           lambda_01 |>
           (*  *)

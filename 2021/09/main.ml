@@ -9,14 +9,14 @@ type t = int array array [@@deriving sexp_of]
 let parse_line str = str |> Str.split (Str.regexp "") |>  List.map int_of_string |> Array.of_list
 
 let parse_input () = "./input" |>
-                     readFile |>
+                     read_file |>
                      Array.of_list |> 
                      Array.map parse_line
 
-let safeGet m (x, y) = try Some m.(y).(x) with _ -> None
+
 
 let getAdjs (i,j) m =
-  List.filter_map (fun x -> safeGet m x) [(i, j); (i-1, j); (i+1, j); (i, j-1); (i, j+1)]
+  List.filter_map (fun x -> matrix_safe_get m x) [(i, j); (i-1, j); (i+1, j); (i, j-1); (i, j+1)]
 
 let isLowPoint (i,j) m  = 
   let adjs = getAdjs (i,j) m in
@@ -39,7 +39,7 @@ let part_01 m =
 let boundaryFill (x, y) m = 
   let m' = Array.copy m in 
   let acc = ref [] in
-  let rec aux (i, j) = match (safeGet m' (i, j)) with 
+  let rec aux (i, j) = match (matrix_safe_get m' (i, j)) with 
     | (Some x) when (x != 9) -> begin
         let _ = m'.(j).(i) <- 9 in
         let _ = (acc := (x:: (!acc))) in

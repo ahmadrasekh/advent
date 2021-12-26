@@ -17,7 +17,7 @@ let parse_line str =
   Scanf.sscanf str "%i,%i -> %i,%i" f
 
 let parse_input file : segment list= file |>  
-                                     readFile |>
+                                     read_file |>
                                      (List.map parse_line)
 
 (* let parse_reading str = str |> 
@@ -73,7 +73,7 @@ let partition (input:t ) : (t * t * t) =
    List.map (List.map parse_row) 
 
    let parse_input = 
-   readFile >>
+   read_file >>
    (fun (hd::tl) -> (parse_reading hd, parse_matrices tl))
 
    let markRow (n:int) (r:row) = List.map (fun (x, b) -> if x=n then (x, true) else (x, b)) r

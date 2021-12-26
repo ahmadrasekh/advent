@@ -1,4 +1,8 @@
-open Utils
+open Utils.Util
+
+let parse_input () = "./input" |>
+                     read_file |>
+                     List.map int_of_string
 
 let sums ls = 
   let rec aux acc = function
@@ -12,9 +16,8 @@ let count ls =
     | _ -> acc in
   aux 0 ls
 
-let input = Util.readFile "./input.txt" int_of_string
+let part_01 input = count input
+let part_02 input = count (sums input)
 
-let result01 = count input
-let result02 = count (sums input)
-
-let () = Printf.printf "part 1: %d\n part 2: %d\n" result01 result02
+let () = parse_input () |>
+         fun input -> Printf.printf "part 1: %d\n part 2: %d\n" (part_01 input) (part_02 input)

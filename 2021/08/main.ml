@@ -12,7 +12,7 @@ let parse_line str = str |>
                      |> fun (a::b::[]) -> (a,b);;
 
 let parse_input () = "./input" |>
-                     readFile |>
+                     read_file |>
                      List.map parse_line
 
 
@@ -43,11 +43,11 @@ let mkMapping input =
     | (5, 4, 3) -> 2 (** 2 *)
     | (5, 3, 2) -> 3 (** 3 *)
     | (5, 4, 2) -> 5 (** 5 *) in
-  List.map (fun str -> (sortstr str, decode' str )) input
+  List.map (fun str -> (sort_str str, decode' str )) input
 
 
 let decode mapping input = 
-  List.map (fun x -> List.assoc (sortstr x) mapping) input |>
+  List.map (fun x -> List.assoc (sort_str x) mapping) input |>
   List.map string_of_int |>
   String.concat "" |>
   int_of_string

@@ -5,7 +5,7 @@ open Utils.LinearAlgebra
 type t = int list [@@deriving sexp_of];;
 
 let parse_input ()= "./input" |>
-                    readFile |>
+                    read_file |>
                     List.map (Str.split (Str.regexp ",")) |>
                     List.flatten |>
                     List.map(int_of_string) 
