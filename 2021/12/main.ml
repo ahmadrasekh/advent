@@ -94,6 +94,30 @@ let check_path (fsa:fsa) (path:string) : bool =
   | hd::tl -> hd = (fsa.start) && (aux (true, hd) tl)
 
 
+let mk_path (fsa:fsa) (n:int) : string =
+  let rec aux acc n = () in
+  fsa.start |>
+  List.map (fun input -> 
+      let sO = str_hd input in
+      match sO with 
+      | Some s ->
+        begin 
+          match List.assoc_opt s assoc with
+          | Some next_list -> List.map (fun next -> 
+              if (is_illegal_ input next) then input else  next^input
+            ) next_list
+          | None -> [input]
+        end
+      | None -> []) |>
+  List.flatten |>
+  List.sort_uniq (String.compare)
+
+
+
+
+
+
+
 type t = string list [@@deriving sexp_of]
 
 let str_hd str = try Some (String.get str 0 |> Core.Char.to_string) with _ -> None
