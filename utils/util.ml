@@ -86,3 +86,10 @@ let matrix_find_indices f m = (Core.Array.mapi
                               Array.map Array.to_list |>
                               Array.to_list |>
                               List.flatten
+
+let pairs_from_list (ls: 'a list) : 'a list list= 
+  let rec aux acc = function 
+    | [] | _::[] -> acc
+    | (x::((y::_) as tl)) -> let acc' = (x::y::[])::acc in aux (acc') tl in
+    List.rev (aux [] ls )
+  (* aux [] >> List.rev *)

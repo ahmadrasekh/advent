@@ -71,7 +71,3 @@ let () = parse_input () |>
          fold folds |>
          List.sort_uniq compare |> 
          plot
-(* sexp_of_t |>
-   Core.Sexp.to_string |>
-   print_endline *)
-
